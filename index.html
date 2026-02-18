@@ -24,6 +24,25 @@ body {
     color: #555;
 }
 
+.status {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #444;
+}
+
+.jar-label {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.jar-label.active {
+    color: orange;
+    transform: scale(1.1);
+}
+
 
 h1 {
     margin-top: 20px;
@@ -99,6 +118,15 @@ button:hover {
     margin-top: 20px;
 }
 
+.status {
+    margin-top: 10px;
+    font-size: 40px; /* 2x dari step (20px) */
+    font-weight: bold;
+    color: red;
+    letter-spacing: 1px;
+}
+
+
 </style>
 </head>
 <body>
@@ -110,6 +138,10 @@ button:hover {
 </p>
 
 <div class="steps">Steps: <span id="steps">0</span></div>
+<div class="status" id="statusMessage">
+    PILIH JAR SUMBER
+</div>
+
 
 <div class="game" id="game"></div>
 
@@ -169,11 +201,16 @@ function render() {
         jarDiv.appendChild(water);
         jarDiv.appendChild(valueLabel);
 
-       const jarIndexLabel = document.createElement("div");
-jarIndexLabel.innerText = index + 1;
-jarIndexLabel.style.marginTop = "8px";
-jarIndexLabel.style.fontWeight = "bold";
-jarIndexLabel.style.fontSize = "18px";
+      const jarIndexLabel = document.createElement("div");
+jarIndexLabel.className = "jar-label";
+jarIndexLabel.innerText = "Jar " + (index + 1);
+
+if (selected === index) {
+    jarIndexLabel.classList.add("active");
+}
+
+jarDiv.title = "Klik untuk pilih Jar " + (index + 1);
+
 
 container.appendChild(maxLabel);
 container.appendChild(jarDiv);
@@ -188,17 +225,26 @@ game.appendChild(container);
 
 function handleClick(index) {
 
+    const status = document.getElementById("statusMessage");
+
     if (selected === null) {
+
         selected = index;
+        status.innerText = "PILIH JAR TUJUAN";
+
     } else {
+
         if (selected !== index) {
             transfer(selected, index);
         }
+
         selected = null;
+        status.innerText = "PILIH JAR SUMBER";
     }
 
     render();
 }
+
 
 function transfer(from, to) {
 

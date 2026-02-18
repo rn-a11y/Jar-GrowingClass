@@ -11,6 +11,13 @@ body {
     text-align: center;
 }
 
+    .goal {
+    margin-top: 5px;
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
 .subtitle {
     margin-top: -10px;
     font-size: 16px;
@@ -96,8 +103,12 @@ button:hover {
 </head>
 <body>
 
-<h1>Jars Game</h1>
+<h1>Two Jars Game</h1>
 <p class="subtitle">Simulasi Growing Class – 22 Februari 2026</p>
+<p class="goal">
+    Goal: Isi Jar 1 dan Jar 2 masing-masing menjadi 10 liter
+</p>
+
 <div class="steps">Steps: <span id="steps">0</span></div>
 
 <div class="game" id="game"></div>
@@ -158,10 +169,18 @@ function render() {
         jarDiv.appendChild(water);
         jarDiv.appendChild(valueLabel);
 
-        container.appendChild(maxLabel);
-        container.appendChild(jarDiv);
+       const jarIndexLabel = document.createElement("div");
+jarIndexLabel.innerText = index + 1;
+jarIndexLabel.style.marginTop = "8px";
+jarIndexLabel.style.fontWeight = "bold";
+jarIndexLabel.style.fontSize = "18px";
 
-        game.appendChild(container);
+container.appendChild(maxLabel);
+container.appendChild(jarDiv);
+container.appendChild(jarIndexLabel);
+
+game.appendChild(container);
+
     });
 
     document.getElementById("steps").innerText = steps;
@@ -215,4 +234,5 @@ render();
 
 </body>
 </html>
+
 
